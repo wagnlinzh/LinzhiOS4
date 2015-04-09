@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 指定Hibernate映射文件的DTD信息 -->
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <!--一个映射文件最终会生成两张表-->
+    <class name="linzhi.bean.User" table="user">
+
+        <id name="id" column="id" type="string">      <!--//name=id，是指主键的名字是id，column是指对应数据库中的哪一列-->
+            <generator class="uuid"/>
+        </id>
+
+        <property name="username" column="username" type="string"/>
+
+        <property name="password" column="password" type="string"/>
+
+
+
+    </class>
+
+</hibernate-mapping>
