@@ -13,15 +13,17 @@
 
         <property name="name" column="cname" type="string"/>
 
-        <set name="students" table="S_C" cascade="save-update">
+        <set name="students" table="S_C" cascade="save-update" order-by="id asc">
             <key column="C_id"></key>
             <many-to-many class="linzhi.bean.Student" column="S_id"/>
         </set>
 
-        <set name="scores" cascade="all" inverse="true">
+        <set name="scores" table="S_C" cascade="all" inverse="true">
             <key column="C_id"/>
             <one-to-many class="linzhi.bean.Score"/>
         </set>
+
+
     </class>
 
 </hibernate-mapping>

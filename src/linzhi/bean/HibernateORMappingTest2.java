@@ -13,7 +13,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 public class HibernateORMappingTest2 {
 
@@ -42,22 +44,26 @@ public class HibernateORMappingTest2 {
 
     @Test
     public void testSave(){
-//        Student stu = new Student();
+
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Student stu= (Student)session.createQuery("from Student s where s.email = ?").setString(0,"alan@me.com")
+
+        Student stu= (Student)session.createQuery("from Student s where s.email = ?")
+                .setString(0, "alan@me.com")
                 .uniqueResult();
+
+//        Student stu = new Student();
 //        stu.setName("alan");
 //        stu.setEmail("alan@me.com");
 //        stu.setPassword("alan");
 
         Course c = new Course();
-        c.setName("政治：近代史");
+        c.setName("数理统计与概率论");
 
         Score score = new Score();
         score.setStudent(stu);
         score.setCourse(c);
-        score.setScore(95);
+        score.setScore(88);
 
 
 
@@ -70,49 +76,89 @@ public class HibernateORMappingTest2 {
     }
 
     @Test
-    public void testLoad(){
+    public void testSelect(){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
 
         Student stu = (Student)session.createQuery("from Student stu where stu.email = ?")
                 .setString(0,"alan@me.com")
-                .uniqueResult();
+                .list()
+                .get(0);
 
+        /*两者等价*/
+
+        /*
+        Student stu1 = (Student)session.createQuery("from Student stu where stu.email = ?")
+                .setString(0,"alan@me.com")
+                .uniqueResult();
+        */
+        System.out.println("==========================================================");
+        List list= session.createQuery("from Course ").list();
+        for (int i=0;i< list.size();i++){
+            System.out.println(list.get(i));
+        }
+
+        Set set=stu.getCourses();
+        Iterator itr=set.iterator();
+        while (itr.hasNext()){
+            System.out.println(itr.next());
+        }
+
+        System.out.println("===========================stu.getName()===============================");
         System.out.println(stu.getName());
 
+
+        System.out.println("============================course.getName()==============================");
         for(Course course:stu.getCourses()){
             System.out.println(course.getName());
         }
 
+
+
+//      这种方式的操作是对应于set的操作方式
+        System.out.println("=============================score.getScore()=============================");
         for (Score score:stu.getScores()) {
             System.out.println(score.getScore());
         }
-        session.getTransaction().commit();
-        session.close();
+
+
 
         System.out.println("==========================================================");
 
-        List<Map> list=null;
+//        4/10
+//        List<Map> list=null;
 
-        Map<String,Integer> course_score_Map = new HashMap<>();
-        Set<Score> scoreSet=stu.getScores();
-        Set<Course> courseSet=stu.getCourses();
+//        Map<String,Integer> course_score_Map = new HashMap<>();
+//        Set<Score> scoreSet=stu.getScores();
+//        Set<Course> courseSet=stu.getCourses();
+//
+//        Iterator courseIterator= courseSet.iterator();
+//        Iterator scoreIterator=scoreSet.iterator();
+//
+//        while (scoreIterator.hasNext()&&courseIterator.hasNext()){
+//            Course course=(Course)courseIterator.next();
+//            Score score=(Score)scoreIterator.next();
+//            course_score_Map.put(course.getName(),score.getScore());
+//            list.add(course_score_Map);
+//        }
+//
+//        for (int i=0;i<list.size();i++){
+//            System.out.println(list.get(i));
+//        }
 
-        Iterator courseIterator= courseSet.iterator();
-        Iterator scoreIterator=scoreSet.iterator();
-
-        while (scoreIterator.hasNext()&&courseIterator.hasNext()){
-            Course course=(Course)courseIterator.next();
-            Score score=(Score)scoreIterator.next();
-            course_score_Map.put(course.getName(),score.getScore());
-            list.add(course_score_Map);
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        List<Integer> list1=null;
+        list1=session.createQuery("select score from linzhi.bean.Score").list();
+        for(int i=0;i<list.size();i++){
+            System.out.println(list1.get(i));
         }
 
-        for (int i=0;i<list.size();i++){
-            System.out.println(list.get(i));
-        }
 
+
+
+        session.getTransaction().commit();
+        session.close();
     }
 
 

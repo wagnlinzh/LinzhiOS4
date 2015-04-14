@@ -4,6 +4,7 @@ package linzhi.bean;
  * Created by wanglinzhizhi on 15-4-8.
  */
 public class Score {
+
     private String id;
     private int score;
     private Student student;
@@ -25,7 +26,6 @@ public class Score {
         this.score = score;
     }
 
-
     public Student getStudent() {
         return student;
     }
@@ -41,4 +41,5 @@ public class Score {
     public void setCourse(Course course) {
         this.course = course;
     }
+
 }

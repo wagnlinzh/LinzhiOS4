@@ -12,6 +12,7 @@ public class Course {
     private Set<Student> students=new HashSet<Student>();
     private Set<Score> scores=new HashSet<Score>();
 
+
     public Set<Score> getScores() {
         return scores;
     }
@@ -19,6 +20,8 @@ public class Course {
     public void setScores(Set<Score> scores) {
         this.scores = scores;
     }
+
+
 
     public String getId() {
         return id;

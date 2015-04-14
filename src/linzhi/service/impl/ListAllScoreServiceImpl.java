@@ -1,7 +1,7 @@
 package linzhi.service.impl;
 
-import linzhi.DAO.ScoreManager;
-import linzhi.DAO.impl.ScoreManagerImpl;
+import linzhi.DAO.ScoreManagerDAO;
+import linzhi.DAO.impl.ScoreManagerDAOImpl;
 import linzhi.bean.Score;
 import linzhi.service.ListAllScoreService;
 
@@ -12,11 +12,10 @@ import java.util.List;
  */
 public class ListAllScoreServiceImpl implements ListAllScoreService {
     @Override
-    public List<Score> listAllScore(String email) {
-        ScoreManager scoreManager=new ScoreManagerImpl();
+    public List<Integer> listAllScore(String email) {
+        ScoreManagerDAO scoreManagerDAO =new ScoreManagerDAOImpl();
 
-
-        return scoreManager.listAllScore(email);
+        return scoreManagerDAO.listAllScore(email);
 
     }
 }

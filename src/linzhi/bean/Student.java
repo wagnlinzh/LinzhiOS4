@@ -15,6 +15,7 @@ public class Student {
     private Set<Course> courses = new HashSet<Course>();
     private Set<Score> scores=new HashSet<Score>();
 
+
     public Student() {
     }
 
@@ -70,6 +71,7 @@ public class Student {
     public void setScores(Set<Score> scores) {
         this.scores = scores;
     }
+
 
 
     @Override
