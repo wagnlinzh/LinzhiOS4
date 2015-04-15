@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" errorPage="" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" errorPage="" autoFlush="true" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -24,11 +24,9 @@
 
 
 
-
-
 </head>
 <body>
-	
+
   <div class="demo container">
 
 	   
@@ -36,10 +34,11 @@
 
        <!-- Main jumbotron for a primary marketing message or call to action -->
 
-    
+
 
       <div class="jumbotron" id="classes">
-        <p>Now Time: Monday Morning #1。</p>
+        <p>Now Time:<%=session.getAttribute("classTime")%> 。</p>
+        <p><%= request.getParameter("classTime")%></p>
       </div>
 
       <!-- Form -->
@@ -206,9 +205,13 @@
               });
             }else{
                 //将课程名的数据传到chooseClass.jsp页面
+                <%
+                    System.out.println(session.getAttribute("className"));
+                %>
 
-                $.modal('<div><h1>Good Luck！'+$className+'</h1><p></p><p>所选择的课程已提交!</p></div>',{"overlayClose":true
-              });
+                $.modal('<div><h1>Good Luck! '+$className+'</h1><p></p><p>所选择的课程已提交!</p></div>',
+                        {"overlayClose":true});
+
 
                 // var url="chooseClass.jsp"
                 //   window.open(encodeURI(url+"?$className="+$className));
@@ -225,9 +228,6 @@
     </script>
 
 
-    <script type="text/javascript">
-        $(".jumbotron > p").replaceWith("<%=session.getAttribute("message")%>");
-    </script>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" errorPage="" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" errorPage="" autoFlush="true" %>
 <!DOCTYPE html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -70,7 +70,7 @@
         </div>
 
         <div class="page-header">
-          <h1>Weeks</h1>
+          <h1>Curiculum Schedule</h1>
         </div>
         
         <!-- 课程格子 -->
@@ -78,26 +78,26 @@
           <!-- 第一行，thead --><!-- 星期几 -->
           <div class="eight column row" id="head">
             <div class="column"> </div>
-            <div class="column">Monday</div>
-            <div class="column">Tuesday</div>
-            <div class="column">Wenday</div>
-            <div class="column">Thursday</div>
-            <div class="column">Friday</div>
-            <div class="column">Saturday</div>
-            <div class="column">Sunday</div>
+            <div class="column" id="0_1">Monday</div>
+            <div class="column" id="0_2">Tuesday</div>
+            <div class="column" id="0_3">Wenday</div>
+            <div class="column" id="0_4">Thursday</div>
+            <div class="column" id="0_5">Friday</div>
+            <div class="column" id="0_6">Saturday</div>
+            <div class="column" id="0_7">Sunday</div>
           </div>
           
           <!-- 第一节课 --><!-- tbody 第一行 -->
           <div class="eight column row">
             <div class="column"><i class="tag icon"></i>Morning</div>
             
-            <div class="column" id="Monday Morning #1"><a href='class.jsp' class='open-basic-ifr'><div class='ui blue basic button'>尚未选课</div></a></div>
-            <div class="column" id="Tuesday Morning #1"></div>
-            <div class="column" id="Wenday Morning #1"></div>
-            <div class="column" >概率论</div>
-            <div class="column">政治</div>
-            <div class="column">高等数学</div>
-            <div class="column">线性代数</div>
+            <div class="column" id="1_1"><a href='classHtml.action' class='open-basic-ifr'><button class='ui blue basic button' value="Monday Morning ^&$#$%1">尚未选课</button></a></div>
+            <div class="column" id="1_2"></div>
+            <div class="column" id="1_3"></div>
+            <div class="column" id="1_4">概率论</div>
+            <div class="column" id="1_5">政治</div>
+            <div class="column" id="1_6">高等数学</div>
+            <div class="column" id="1_7">线性代数</div>
           </div>
 
           <!-- 上午 第二节课 -->
@@ -106,13 +106,13 @@
 
 
 
-            <div class="column"></div>
-            <div class="column"></div>
-            <div class="column"></div>
-            <div class="column"></div>  
-            <div class="column">数据结构 </div>
-            <div class="column">计算机组成原理</div>
-            <div class="column">计算机网络</div>  
+            <div class="column" id="2_1"></div>
+            <div class="column" id="2_2"></div>
+            <div class="column" id="2_3"></div>
+            <div class="column" id="2_4"></div>
+            <div class="column" id="2_5">数据结构 </div>
+            <div class="column" id="2_6">计算机组成原理</div>
+            <div class="column" id="2_7">计算机网络</div>
           </div>
 
           <!--下午 第一节课 -->
@@ -201,8 +201,10 @@
       <div class="container">
         <p class="text-muted">copyright 2014-2015 wanglinzhizhi.</p>
       </div>
-
     </footer>
+
+
+
 
     
 	  <!--add jquery-->
@@ -214,9 +216,6 @@
     <!-- SimpleModal and Basic JS files -->
     <script type='text/javascript' src='dist/js/jquery.simplemodal.js'></script>
 
-
-
-   
         
     <!--  为选课的空的格子里填入尚未选课的按钮;-->
     <script type="text/javascript">
@@ -224,8 +223,10 @@
         //为选课的空的格子里填入尚未选课的按钮;
         for (var i = 1; i < 56; i++) {
           var $unit=$(".column:not('.eight.column.row'):eq("+i+")");
+
+
           if ($unit.text()=="") {
-              $unit.append("<a href='classHtml.action' class='open-basic-ifr'><div class='ui blue basic button'>尚未选课</div></a>");
+              $unit.append("<a href='classHtml.action' class='open-basic-ifr'><button class='ui blue basic button' id="+i+">尚未选课</button></a>");
           }
         }
       });
@@ -249,37 +250,47 @@
             "opacity":70,
             "overlayClose":true,
             "containerId":id,
+            "transient":true,
+            "persist":true,
             onClose:function(){
-
-//              var $className=$.get("class.jsp",$className);
-
-
-
-              $.modal.close();
+                $.modal.close();
             }}); //id=ifr-dialog-content
+
         }  
     </script>
 
-
-
+<%--
+    隐藏的按钮，仅仅是为了传值的buffer
+--%>
+    <form action="CouresTips.action" id="testform">
+        <input type="hidden" id="classTimeBuffer" value="0"  name="classTime"/>
+    </form>
     <script type="text/javascript">
       $(function(){
         var $Btn=$(".ui.blue.basic.button");
-        $Btn.click(function(e){
+        $Btn.click(function(event){
+//
+            var classTime=$(this).attr("id");
+            var $buffer=$("#classTimeBuffer");
+            $buffer.attr("value",classTime);
+            alert($buffer.attr("value"));
 
-            <%
-                session.setAttribute("message","Monday Morning #1111@_@");
-            %>
+            $("#testform").submit();
+
+
             $(this).replaceWith("<a href='classHtml.action' class='open-basic-ifr'>" +
-                    "<div class='ui blue basic button'>"+
+                    "<button class='ui blue basic button'>"+
 
-                        "<div id='className'>"+"ajax test"+
-                        "</div>"+
+                        +"<%=session.getAttribute("className")%>"+
 
-                    " </div></a>");//$className not finish;
+                    " </button></a>");//$className not finish;
         })
       })
     </script>
+
+
+
+
       
   
 </body>
