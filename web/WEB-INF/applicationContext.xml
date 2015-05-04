@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+
+        <property name="url" value="jdbc:mysql://localhost:3306/linzhios4"/>
+
+        <property name="username" value="root"/>
+
+        <property name="password" value="nature"/>
+
+    </bean>
+
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+
+        <property name="dataSource" ref="dataSource"/>
+
+        <property name="mappingResources">
+            <list>
+                <value>linzhi/bean/Course.hbm.xml</value>
+                <value>linzhi/bean/Score.hbm.xml</value>
+                <value>linzhi/bean/Student.hbm.xml</value>
+            </list>
+        </property>
+
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    org.hibernate.dialect.MySQL57InnoDBDialect
+                </prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+            </props>
+        </property>
+
+    </bean>
+
+    <!--DAO level-->
+    <bean id="userDAO" class="linzhi.DAO.impl.UserDAOImpl" scope="singleton">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="scoreMangagerDAO" class="linzhi.DAO.impl.ScoreManagerDAOImpl" scope="singleton">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+
+    <!--1-->
+    <!--代理声明类，id可以随便取  1是独立的 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!--2-->
+    <!--Service  userServiceTaget 约定的命名，为它生成代理，他是目标对象，这是事务增强的目标对象-->
+    <bean id="managerServiceTarget" class="linzhi.service.impl.ManagerServiceImpl">
+        <property name="scoreManagerDAO" ref="scoreMangagerDAO"/>
+    </bean>
+
+
+
+
+    <!-- Service level-->
+    <bean id="signinService" class="linzhi.service.impl.SigninServiceImpl">
+        <property name="userDAO" ref="userDAO"/>
+    </bean>
+<!--
+
+    <bean id="managerService" class="linzhi.service.impl.ManagerServiceImpl">
+        <property name="ScoreManagerDAO" ref="scoreMangagerDAO"/>
+    </bean>
+-->
+
+    <!--3-->
+    <!--代理  声明式的代理-->
+    <bean id="managerService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+          scope="singleton"> <!--TransactionProxyFactoryBean 这货是Factory-->
+
+        <!--原始对象/真实对象是：userServiceTarget-->
+        <property name="target" ref="managerServiceTarget"/><!--这个代理，代理谁？--><!--代理对象内部必须具有一个真是对象的引用-->
+
+        <!-- 引用之前声明 的事务管理器-->
+        <property name="transactionManager" ref="transactionManager"/>
+
+        <property name="transactionAttributes">
+            <props>
+                <!--所有find开头的 方法，设置PROPAGATION_REQUIRED，表示如果已经存在这个事务，就用这个事务，如果不存在这个事务，则新创建一个事务-->
+                <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+                <!--读-->
+                <prop key="*">PROPAGATION_REQUIRED</prop>
+                <!--其他-->
+            </props>
+        </property>
+
+    </bean>
+
+    <!--action level-->
+    <bean id="loginAction" class="linzhi.action.SigninAction">
+        <property name="signinService" ref="signinService"/>
+    </bean>
+
+    <bean id="logoutActin" class="linzhi.action.SignoutAction"/>
+
+    <bean id="checkGradeJsp_Spring" class="linzhi.action.checkGradeJspAction">
+        <property name="managerService" ref="managerService"/>
+    </bean>
+
+
+    <bean id="chooseClassJsp_Spring" class="linzhi.action.GetClassSchedule">
+        <property name="managerService" ref="managerService"/>
+    </bean>
+
+    <bean id="courseTips_Spring" class="linzhi.action.CourseTips"/>
+
+
+    <bean id="className_Spring" class="linzhi.action.ClassName">
+        <property name="managerService" ref="managerService"/>
+    </bean>
+</beans>

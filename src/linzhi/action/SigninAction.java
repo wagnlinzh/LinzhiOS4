@@ -4,7 +4,6 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import linzhi.bean.Student;
 import linzhi.service.SigninService;
-import linzhi.service.impl.SigninServiceImpl;
 
 
 /**
@@ -13,14 +12,12 @@ import linzhi.service.impl.SigninServiceImpl;
 public class SigninAction extends ActionSupport {
 
 
-//    private Student student;
 
     private String email;
 
     private String password;
 
-    private SigninService signinService =new SigninServiceImpl();
-
+    private SigninService signinService;
 
     public String getEmail() {
         return email;
@@ -46,6 +43,13 @@ public class SigninAction extends ActionSupport {
         this.signinService = signinService;
     }
 
+
+    @Override
+    public void validate() {
+        //做没有业务逻辑的验证,只进行的是输入验证
+
+        System.out.println("validate innoked!算了，这里不做输入验证了，因为js已经完成了基本的输入验证");
+    }
 
     @Override
     public String execute() throws Exception {
@@ -79,10 +83,5 @@ public class SigninAction extends ActionSupport {
     }
 
 
-    @Override
-    public void validate() {
-    //做没有业务逻辑的验证,只进行的是输入验证
 
-        System.out.println("validate innoked!算了，这里不做输入验证了，因为js已经完成了基本的输入验证");
-    }
 }

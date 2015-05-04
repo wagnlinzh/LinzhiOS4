@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:mysql://localhost:3306/linzhios3</property>
+       <!-- <property name="connection.url">jdbc:mysql://localhost:3306/linzhios4</property>
         <property name="connection.driver_class">org.gjt.mm.mysql.Driver</property>
         <property name="connection.username">root</property>
         <property name="connection.password">nature</property>
@@ -15,11 +15,11 @@
 
 
 
-        <!--连接池-->
-        <property name="hibernate.c3p0.min_size">10</property><!--最少的连接数量-->
+        &lt;!&ndash;连接池&ndash;&gt;
+        <property name="hibernate.c3p0.min_size">10</property>&lt;!&ndash;最少的连接数量&ndash;&gt;
         <property name="hibernate.c3p0.max_size">40</property>
-        <property name="hibernate.c3p0.timeout">200</property><!--超时时间-->
-        <property name="hibernate.c3p0.max_statements">30</property><!---->
+        <property name="hibernate.c3p0.timeout">200</property>&lt;!&ndash;超时时间&ndash;&gt;
+        <property name="hibernate.c3p0.max_statements">30</property>&lt;!&ndash;&ndash;&gt;
         <property name="hibernate.c3p0.idle_test_period">100</property>
 
 
@@ -27,7 +27,7 @@
         <mapping resource="linzhi/bean/Student.hbm.xml"/>
         <mapping resource="linzhi/bean/Course.hbm.xml"/>
         <mapping resource="linzhi/bean/Score.hbm.xml"/>
-
+-->
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->

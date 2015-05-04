@@ -13,7 +13,7 @@ public interface UserDAO {
     public void delete(Student student);
     public Student find(int id);
     public void update(Student student);
-    public boolean check(String email,String password);
+    public boolean check(String email, String password);
     public boolean check(Student student);
 
 

@@ -48,25 +48,25 @@ public class HibernateORMappingTest2 {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 //
-//        Student stu = (Student) session.createQuery("from Student s where s.email = ?")
-//                .setString(0, "alan@me.com")
-//                .uniqueResult();
+        Student stu = (Student) session.createQuery("from Student s where s.email = ?")
+                .setString(0, "alan@me.com")
+                .uniqueResult();
 
-        Student stu = new Student();
-        stu.setName("alan");
-        stu.setEmail("alan@me.com");
-        stu.setPassword("alan");
+//        Student stu = new Student();
+//        stu.setName("alan");
+//        stu.setEmail("alan@me.com");
+//        stu.setPassword("alan");
 
         Course c = new Course();
-        c.setName("计算机网络");
-        c.setTimeNum(10);
+        c.setName("操作系统");
+        c.setTimeNum(11);
 
         Score score = new Score();
         score.setStudent(stu);
         score.setCourse(c);
-        score.setScore(145);
+        score.setScore(150);
 
-        score.setClassTimeNum(10);           /*虽然不互斥，但是也不要一样*/
+        score.setClassTimeNum(11);           /*虽然不互斥，但是也不要一样*/
         score.setClassType(1);/*1:必修            0 ：选修*/
 
 
@@ -296,11 +296,11 @@ public class HibernateORMappingTest2 {
             * 若有，则先删除原来对应的classTimeNum的记录，更新新的记录
             * 若没有则直接添加*/
 
-        List listClassTimeNum = session.createQuery("select classTimeNum from Score").list();
+        List<Integer> listClassTimeNum = session.createQuery("select classTimeNum from Score").list();
         boolean flag = false;         //false表示没有相同的classTimeNum
         int hover=-1;                 //位置点
         for (int i = 0; i < listClassTimeNum.size(); i++) {
-            if (classTimeNum == (int)listClassTimeNum.get(i)) {
+            if (classTimeNum == listClassTimeNum.get(i)) {
                 flag = true;          //表明存在相同的classTimeNum
                 hover=i;
             }

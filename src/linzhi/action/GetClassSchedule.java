@@ -5,12 +5,9 @@ import com.opensymphony.xwork2.ActionSupport;
 import linzhi.bean.ClassDetail;
 import linzhi.bean.Course;
 import linzhi.bean.Student;
-import linzhi.service.ListAllClassTimeService;
-import linzhi.service.ListAllClassTypeService;
-import linzhi.service.ListAllCourseService;
-import linzhi.service.impl.ListAllClassTimeServiceImpl;
-import linzhi.service.impl.ListAllClassTypeServiceImpl;
-import linzhi.service.impl.ListAllCourseServiceImpl;
+import linzhi.service.ManagerService;
+import linzhi.service.impl.ManagerServiceImpl;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +19,15 @@ import java.util.Map;
  */
 public class GetClassSchedule extends ActionSupport {
 
+    private ManagerService managerService;
+
+    public ManagerService getManagerService() {
+        return managerService;
+    }
+
+    public void setManagerService(ManagerService managerService) {
+        this.managerService = managerService;
+    }
 
 
     @Override
@@ -34,17 +40,19 @@ public class GetClassSchedule extends ActionSupport {
 
 
 //      课程名称
-        ListAllCourseService listAllCourseService = new ListAllCourseServiceImpl();
-        List<Course> courseList = listAllCourseService.listAllCourseService(email);
+//        ListAllCourseService listAllCourseService = new ListAllCourseServiceImpl();
+//        List<Course> courseList = listAllCourseService.listAllCourseService(email);
+        List<Course> courseList=managerService.listAllCourseService(email);
 
 //      上课时间
-        ListAllClassTimeService listAllClassTimeService=new ListAllClassTimeServiceImpl();
-        List<Integer> classTimeNumList=listAllClassTimeService.listAllClassTime(email);
+//        ListAllClassTimeService listAllClassTimeService=new ListAllClassTimeServiceImpl();
+//        List<Integer> classTimeNumList=listAllClassTimeService.listAllClassTime(email);
+        List<Integer> classTimeNumList=managerService.listAllClassTime(email);
 
 //      课程类型
-        ListAllClassTypeService listAllClassTypeService=new ListAllClassTypeServiceImpl();
-        List<Integer> classTypeList=listAllClassTypeService.listAllClassType(email);
-
+//        ListAllClassTypeService listAllClassTypeService=new ListAllClassTypeServiceImpl();
+//        List<Integer> classTypeList=listAllClassTypeService.listAllClassType(email);
+        List<Integer> classTypeList=managerService.listAllClassType(email);
 
         List<ClassDetail> classInfoList=new ArrayList<ClassDetail>();
 
@@ -78,18 +86,19 @@ public class GetClassSchedule extends ActionSupport {
     public static void main(String[] args) {
 
         String email = "alan@me.com";
+        ManagerService managerService=new ManagerServiceImpl();
 //      课程名称
-        ListAllCourseService listAllCourseService = new ListAllCourseServiceImpl();
-        List<Course> courseList = listAllCourseService.listAllCourseService(email);
-
+//        ListAllCourseService listAllCourseService = new ListAllCourseServiceImpl();
+//        List<Course> courseList = listAllCourseService.listAllCourseService(email);
+        List<Course> courseList=managerService.listAllCourseService(email);
 //      上课时间
-        ListAllClassTimeService listAllClassTimeService=new ListAllClassTimeServiceImpl();
-        List<Integer> classTimeList=listAllClassTimeService.listAllClassTime(email);
+//        ListAllClassTimeService listAllClassTimeService=new ListAllClassTimeServiceImpl();
+//        List<Integer> classTimeList=listAllClassTimeService.listAllClassTime(email);
+        List<Integer> classTimeList=managerService.listAllClassTime(email);
 
-
-        ListAllClassTypeService listAllClassTypeService=new ListAllClassTypeServiceImpl();
-        List<Integer> classTypeList=listAllClassTypeService.listAllClassType(email);
-
+//        ListAllClassTypeService listAllClassTypeService=new ListAllClassTypeServiceImpl();
+//        List<Integer> classTypeList=listAllClassTypeService.listAllClassType(email);
+        List<Integer> classTypeList=managerService.listAllClassType(email);
 
         Map classTimeMap = new HashMap();
         List<ClassDetail> classInfoList=new ArrayList<ClassDetail>();

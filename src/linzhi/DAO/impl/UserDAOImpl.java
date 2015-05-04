@@ -1,12 +1,8 @@
 package linzhi.DAO.impl;
 
-import linzhi.DAO.HibernateUtil.HibernateUtil;
 import linzhi.DAO.UserDAO;
 import linzhi.bean.Student;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
 import java.util.Iterator;
 import java.util.List;
@@ -15,13 +11,13 @@ import java.util.List;
  * Created by wanglinzhizhi on 15-4-7.
  */
 
-public class UserDAOImpl implements UserDAO {
-    private Session session;
-    private Transaction transaction;
-
-    public UserDAOImpl() {
-        session = HibernateUtil.getSession();
-    }
+public class UserDAOImpl extends HibernateDaoSupport implements UserDAO {
+//    private Session session;
+//    private Transaction transaction;
+//
+//    public UserDAOImpl() {
+//        session = HibernateUtil.getSession();
+//    }
 
 
     /**
@@ -29,16 +25,20 @@ public class UserDAOImpl implements UserDAO {
      *
      * @param student
      */
+//    public void create(Student student) {
+//        try {
+//            transaction = session.beginTransaction();
+//            session.save(student);
+//            transaction.commit();
+//        } catch (HibernateException e) {
+//            HibernateUtil.rollback(transaction);
+//        } finally {
+//            HibernateUtil.closeSession();
+//        }
+//    }
+    @Override
     public void create(Student student) {
-        try {
-            transaction = session.beginTransaction();
-            session.save(student);
-            transaction.commit();
-        } catch (HibernateException e) {
-            HibernateUtil.rollback(transaction);
-        } finally {
-            HibernateUtil.closeSession();
-        }
+        this.getHibernateTemplate().save(student);
     }
 
 
@@ -47,32 +47,40 @@ public class UserDAOImpl implements UserDAO {
      *
      * @param student
      */
+//    public void delete(Student student) {
+//        try {
+//            transaction = session.beginTransaction();
+//            session.delete(student);
+//            transaction.commit();
+//        } catch (HibernateException e) {
+//            HibernateUtil.rollback(transaction);
+//        } finally {
+//            HibernateUtil.closeSession();
+//        }
+//
+//    }
+    @Override
     public void delete(Student student) {
-        try {
-            transaction = session.beginTransaction();
-            session.delete(student);
-            transaction.commit();
-        } catch (HibernateException e) {
-            HibernateUtil.rollback(transaction);
-        } finally {
-            HibernateUtil.closeSession();
-        }
-
+        this.getHibernateTemplate().delete(student);
     }
 
+//    public Student find(int id) {
+//        Student student = null;
+//        try {
+//            transaction = session.beginTransaction();
+//            student= (Student ) session.get(Student.class, id);
+//            transaction.commit();
+//        } catch (HibernateException e) {
+//            HibernateUtil.rollback(transaction);
+//        } finally {
+//            HibernateUtil.closeSession();
+//        }
+//        return student;
+//    }
 
+    @Override
     public Student find(int id) {
-        Student student = null;
-        try {
-            transaction = session.beginTransaction();
-            student= (Student ) session.get(Student.class, id);
-            transaction.commit();
-        } catch (HibernateException e) {
-            HibernateUtil.rollback(transaction);
-        } finally {
-            HibernateUtil.closeSession();
-        }
-        return student;
+        return this.getHibernateTemplate().get(Student.class, id);
     }
 
 
@@ -100,24 +108,25 @@ public class UserDAOImpl implements UserDAO {
 //    }
 
 
-
-
-
     /**
      * update用户
      *
      * @param student
      */
+//    public void update(Student student) {
+//        try {
+//            transaction = session.beginTransaction();
+//            session.update(student);
+//            transaction.commit();
+//        } catch (HibernateException e) {
+//            HibernateUtil.rollback(transaction);
+//        } finally {
+//            HibernateUtil.closeSession();
+//        }
+//    }
+    @Override
     public void update(Student student) {
-        try {
-            transaction = session.beginTransaction();
-            session.update(student);
-            transaction.commit();
-        } catch (HibernateException e) {
-            HibernateUtil.rollback(transaction);
-        } finally {
-            HibernateUtil.closeSession();
-        }
+        this.getHibernateTemplate().update(student);
     }
 
 
@@ -146,74 +155,105 @@ public class UserDAOImpl implements UserDAO {
 //    }
 
 
+    //    @Override
+//    public boolean check(Student student) {
+//        try{
+//            String real_pass=null;
+//            transaction = session.beginTransaction();
+//            Query query = session.createQuery("select stu.password from Student stu where stu.email = ?").setString(student.getEmail());
+//            real_pass=(String) query.uniqueResult();
+//            transaction.commit();
+//            if ((!real_pass.isEmpty()) && real_pass.equals(student.getPassword())){
+//                return true;
+//            }
+//
+//        }
+//        catch (HibernateException e) {
+//            HibernateUtil.rollback(transaction);
+//        } finally {
+//        HibernateUtil.closeSession();
+//        }
+//        return false;
+//    }
     @Override
     public boolean check(Student student) {
-        try{
-            String real_pass=null;
-            transaction = session.beginTransaction();
-            Query query = session.createQuery("select stu.password from Student stu where stu.email = '" + student.getEmail()+"'");
-            real_pass=(String) query.uniqueResult();
-            transaction.commit();
-            if ((!real_pass.isEmpty()) && real_pass.equals(student.getPassword())){
-                return true;
-            }
-
-        }
-        catch (HibernateException e) {
-            HibernateUtil.rollback(transaction);
-        } finally {
-        HibernateUtil.closeSession();
+        String real_pass = null;
+        real_pass = (String) this.getHibernateTemplate().find("select stu.password from Student stu where stu.email = ?", student.getEmail()).get(0);
+        if ((!real_pass.isEmpty()) && real_pass.equals(student.getPassword())) {
+            return true;
         }
         return false;
     }
 
+
     /**
-     *
-     *
      * 通过email,password 检查用户登录
      *
      * @param email
      * @param password
      */
+//    public boolean check(String email, String password) {
+//        try {
+//
+//            List list = null;
+//
+//            transaction = session.beginTransaction();
+//
+//
+////   错误示范
+////            Query query = session.createQuery("select stu.password from Student stu where stu.email =:email");
+////            Query query = session.createQuery("select stu.password from Student stu where stu.email ='"+email+"'");
+//            Query query = session.createQuery("select stu.password from Student stu where stu.email =?").setString(0,email);
+//
+//
+//
+//
+//
+//            list = query.list();
+//            transaction.commit();
+//
+//            if (!list.isEmpty()) {
+//                Iterator iterator = list.iterator();
+//                while (iterator.hasNext()) {
+//                    String token_pass = (String) iterator.next();
+//                    System.out.println(token_pass);
+//
+//                    if (token_pass.equals(password)) {
+//                        return true;
+//                    }
+//
+//                }
+//            }
+//
+//        } catch (HibernateException e) {
+//            HibernateUtil.rollback(transaction);
+//        } finally {
+//            HibernateUtil.closeSession();
+//        }
+//
+//        return false;
+//    }
+//
+//
+    @Override
     public boolean check(String email, String password) {
-        try {
+        List list = null;
+        list = this.getHibernateTemplate().find("select stu.password from Student stu where stu.email =?", email);
 
-            List list = null;
+        if (!list.isEmpty()) {
+            Iterator iterator = list.iterator();
+            while (iterator.hasNext()) {
+                String token_pass = (String) iterator.next();
+                System.out.println(token_pass);
 
-            transaction = session.beginTransaction();
-
-
-//            Query query = session.createQuery("select stu.password from Student stu where stu.email =:email");
-//            Query query = session.createQuery("select stu.password from Student stu where stu.email ='"+email+"'");
-            Query query = session.createQuery("select stu.password from Student stu where stu.email =?").setString(0,email);
-
-
-
-
-
-            list = query.list();
-            transaction.commit();
-
-            if (!list.isEmpty()) {
-                Iterator iterator = list.iterator();
-                while (iterator.hasNext()) {
-                    String token_pass = (String) iterator.next();
-                    System.out.println(token_pass);
-
-                    if (token_pass.equals(password)) {
-                        return true;
-                    }
-
+                if (token_pass.equals(password)) {
+                    return true;
                 }
-            }
 
-        } catch (HibernateException e) {
-            HibernateUtil.rollback(transaction);
-        } finally {
-            HibernateUtil.closeSession();
+            }
         }
+
 
         return false;
     }
-
 }

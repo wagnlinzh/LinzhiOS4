@@ -29,38 +29,34 @@
 
 
 
-        <action name="signin" class="linzhi.action.SigninAction">
+        <action name="signin" class="loginAction">
             <result name="success">WEB-INF/index.jsp</result>
             <result name="input">WEB-INF/signin.jsp</result>
         </action>
 
-        <action name="signout" class="linzhi.action.SignoutAction">
+        <action name="signout" class="logoutActin">
             <result name="success">WEB-INF/signin.jsp</result>
         </action>
 
 
         <!--直接传送结果-->
-        <action name="checkGradeJsp" class="linzhi.action.checkGradeJspAction">
+        <action name="checkGradeJsp" class="checkGradeJsp_Spring">
             <result>WEB-INF/checkGrade.jsp</result>
         </action>
 
-        <action name="chooseClassJsp" class="linzhi.action.GetClassSchedule">
+        <action name="chooseClassJsp" class="chooseClassJsp_Spring">
             <result>WEB-INF/chooseClass.jsp</result>
         </action>
 
         <action name="indexJsp">
-            <result>WEB-INF/index.jsp</result>
+            <result name="success">WEB-INF/index.jsp</result>
         </action>
 
-        <action name="CouresTips" class="linzhi.action.CourseTips">
+        <action name="CouresTips" class="courseTips_Spring">
             <result>WEB-INF/class.jsp</result>
         </action>
 
-        <!--<action name="classHtml">-->
-            <!--<result>WEB-INF/class.jsp</result>-->
-        <!--</action>-->
-
-        <action name="ClassName" class="linzhi.action.ClassName">
+        <action name="ClassName" class="className_Spring">
             <result>WEB-INF/chooseClass.jsp</result>
         </action>
 

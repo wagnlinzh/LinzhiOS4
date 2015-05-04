@@ -5,14 +5,9 @@ import com.opensymphony.xwork2.ActionSupport;
 import linzhi.bean.ClassDetail;
 import linzhi.bean.Course;
 import linzhi.bean.Student;
-import linzhi.service.ListAllClassTimeService;
-import linzhi.service.ListAllClassTypeService;
-import linzhi.service.ListAllCourseService;
-import linzhi.service.UpdateSCInfo;
-import linzhi.service.impl.ListAllClassTimeServiceImpl;
-import linzhi.service.impl.ListAllClassTypeServiceImpl;
-import linzhi.service.impl.ListAllCourseServiceImpl;
-import linzhi.service.impl.UpdateSCInfoImpl;
+import linzhi.service.ManagerService;
+import linzhi.service.impl.ManagerServiceImpl;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +16,7 @@ import java.util.List;
  * Created by wanglinzhizhi on 15-4-15.
  */
 public class ClassName extends ActionSupport {
+
 
     private String className;
 
@@ -32,13 +28,23 @@ public class ClassName extends ActionSupport {
         this.className = className;
     }
 
+    private ManagerService managerService;
+
+    public ManagerService getManagerService() {
+        return managerService;
+    }
+
+    public void setManagerService(ManagerService managerService) {
+        this.managerService = managerService;
+    }
+
     @Override
     public String execute() throws Exception {
 
 //        System.out.println("classNameAction: className = "+className);
 
 
-        List<ClassDetail> classInfoList=(List<ClassDetail>) ActionContext.getContext()
+        List<ClassDetail> classInfoList = (List<ClassDetail>) ActionContext.getContext()
                 .getSession().get("classInfoList");
 
         //Student email
@@ -46,21 +52,17 @@ public class ClassName extends ActionSupport {
         String email = student.getEmail();
 
         //classTimeNum
-        String classTimeNum2=(String)ActionContext.getContext()
-                .getSession().get("classTimeNum");
-        System.out.println("classTimeNum2 >>>>>>>>>>>>>> "+classTimeNum2);
-        int classTimeNum=Integer.parseInt(classTimeNum2) ;
+        String classTimeNum2 = (String) ActionContext.getContext().getSession().get("classTimeNum");
+        System.out.println("classTimeNum2 >>>>>>>>>>>>>> " + classTimeNum2);
+        int classTimeNum = Integer.parseInt(classTimeNum2);
 
         //classType 1：必修 0：选修
-        int classType=0;
+        int classType = 0;
 
-        UpdateSCInfo updateSCInfo=new UpdateSCInfoImpl();
-        updateSCInfo.updateSCInfo(email,className,classTimeNum,classType);
-
+        managerService.updateSCInfo(email, className, classTimeNum, classType);
 
 
-
-        ClassDetail classDetail=new ClassDetail();
+        ClassDetail classDetail = new ClassDetail();
         classDetail.setClassName(className);
         classDetail.setClassTimeNum(classTimeNum);
         classDetail.setClassType(classType);
@@ -73,9 +75,9 @@ public class ClassName extends ActionSupport {
         没有的话直接添加对象classDetail
         */
 
-        for(int i=0;i<classInfoList.size();i++){
-            int classTimeNumBuf=classInfoList.get(i).getClassTimeNum();
-            if(classTimeNum==classTimeNumBuf){
+        for (int i = 0; i < classInfoList.size(); i++) {
+            int classTimeNumBuf = classInfoList.get(i).getClassTimeNum();
+            if (classTimeNum == classTimeNumBuf) {
                 classInfoList.remove(i);
             }
         }
@@ -89,29 +91,32 @@ public class ClassName extends ActionSupport {
     public static void main(String[] args) {
 
         String email = "alan@me.com";
-//      课程名称
-        ListAllCourseService listAllCourseService = new ListAllCourseServiceImpl();
-        List<Course> courseList = listAllCourseService.listAllCourseService(email);
+        ManagerService managerService = new ManagerServiceImpl();
+
+////      课程名称
+//        ListAllCourseService listAllCourseService = new ListAllCourseServiceImpl();
+//        List<Course> courseList = listAllCourseService.listAllCourseService(email);
+        List<Course> courseList = managerService.listAllCourseService(email);
 
 //      上课时间
-        ListAllClassTimeService listAllClassTimeService=new ListAllClassTimeServiceImpl();
-        List<Integer> classTimeList=listAllClassTimeService.listAllClassTime(email);
+//        ListAllClassTimeService listAllClassTimeService=new ListAllClassTimeServiceImpl();
+//        List<Integer> classTimeList=listAllClassTimeService.listAllClassTime(email);
+        List<Integer> classTimeList = managerService.listAllClassTime(email);
+
+//        ListAllClassTypeService listAllClassTypeService=new ListAllClassTypeServiceImpl();
+//        List<Integer> classTypeList=listAllClassTypeService.listAllClassType(email);
+        List<Integer> classTypeList = managerService.listAllClassType(email);
 
 
-        ListAllClassTypeService listAllClassTypeService=new ListAllClassTypeServiceImpl();
-        List<Integer> classTypeList=listAllClassTypeService.listAllClassType(email);
-
-
-
-        List<ClassDetail> classInfoList=new ArrayList<>();
+        List<ClassDetail> classInfoList = new ArrayList();
 
         for (int i = 0; i < classTimeList.size(); i++) {
 
             String courseName = courseList.get(i).getName();
             int course_classTimeNum = classTimeList.get(i);
-            int classType=classTypeList.get(i);
+            int classType = classTypeList.get(i);
 
-            ClassDetail classDetail=new ClassDetail();
+            ClassDetail classDetail = new ClassDetail();
             classDetail.setClassName(courseName);
             classDetail.setClassTimeNum(course_classTimeNum);
             classDetail.setClassType(classType);
@@ -122,12 +127,12 @@ public class ClassName extends ActionSupport {
         }
 
 
-        for (int i=0;i<classInfoList.size();i++) {
+        for (int i = 0; i < classInfoList.size(); i++) {
 
-            ClassDetail classDetail=classInfoList.get(i);
-            System.out.println("classTimeNum: " +classDetail.getClassTimeNum()+ " >>>>>>>>>>"
-                    +"couserName: " + classDetail.getClassName()+">>>>>>>>>>>>>>>"
-                    +"classType:" +classDetail.getClassType());
+            ClassDetail classDetail = classInfoList.get(i);
+            System.out.println("classTimeNum: " + classDetail.getClassTimeNum() + " >>>>>>>>>>"
+                    + "couserName: " + classDetail.getClassName() + ">>>>>>>>>>>>>>>"
+                    + "classType:" + classDetail.getClassType());
         }
     }
 }

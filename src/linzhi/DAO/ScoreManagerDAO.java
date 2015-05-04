@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by wanglinzhizhi on 15-4-9.
  */
-public interface ScoreManagerDAO {
+public interface ScoreManagerDAO{
 
     public List<Integer> listAllScore(String email);
 
@@ -15,8 +15,8 @@ public interface ScoreManagerDAO {
 
     public List<Integer> listAllClassType(String email);
 
-    public List<Course> listAllCourse(String email);
+    public List<?> listAllCourse(String email);
 
-    public void updateSCInfo(String email,String className,int classTimeNum,int classType);
+    public void updateSCInfo(String email, String className, int classTimeNum, int classType);
 
 }

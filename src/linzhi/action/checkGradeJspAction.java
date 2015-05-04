@@ -4,10 +4,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import linzhi.bean.Course;
 import linzhi.bean.Student;
-import linzhi.service.ListAllCourseService;
-import linzhi.service.ListAllScoreService;
-import linzhi.service.impl.ListAllCourseServiceImpl;
-import linzhi.service.impl.ListAllScoreServiceImpl;
+import linzhi.service.ManagerService;
+import linzhi.service.impl.ManagerServiceImpl;
 import org.apache.struts2.ServletActionContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +18,15 @@ import java.util.Map;
  */
 public class checkGradeJspAction extends ActionSupport {
 
+    private ManagerService managerService;
+
+    public ManagerService getManagerService() {
+        return managerService;
+    }
+
+    public void setManagerService(ManagerService managerService) {
+        this.managerService = managerService;
+    }
 
     @Override
     public String execute() throws Exception {
@@ -32,17 +39,21 @@ public class checkGradeJspAction extends ActionSupport {
 
 
 //      课程名称
-        ListAllCourseService listAllCourseService = new ListAllCourseServiceImpl();
+//        ListAllCourseService listAllCourseService = new ListAllCourseServiceImpl();
 
-        List<Course> courseList = listAllCourseService.listAllCourseService(email);
+//        List<Course> courseList = listAllCourseService.listAllCourseService(email);
+        List<Course> courseList = managerService.listAllCourseService(email);
+
 
 //      分数
-        ListAllScoreService listAllScoreService = new ListAllScoreServiceImpl();
+//        ListAllScoreService listAllScoreService = new ListAllScoreServiceImpl();
+//
+//        List<Integer> scoreList = listAllScoreService.listAllScore(email);
 
-        List<Integer> scoreList = listAllScoreService.listAllScore(email);
+        List<Integer> scoreList = managerService.listAllScore(email);
 
 
-        Map map = new HashMap<>();
+        Map map = new HashMap();
 
         for (int i = 0; i < scoreList.size(); i++) {
 
@@ -55,35 +66,40 @@ public class checkGradeJspAction extends ActionSupport {
         HttpServletRequest request = ServletActionContext.getRequest();
         request.setAttribute("couse_scroe", map);
 
-        request.setAttribute("CourseList",courseList);
+        request.setAttribute("CourseList", courseList);
 //
-        request.setAttribute("ScoreList",scoreList);
+        request.setAttribute("ScoreList", scoreList);
 
 
         return SUCCESS;
     }
 
 
-//    for test
+    //    for test
     public static void main(String[] args) {
         String email = "alan@me.com";
+        ManagerService managerService = new ManagerServiceImpl();
 //      课程名称
-        ListAllCourseService listAllCourseService = new ListAllCourseServiceImpl();
+//        ListAllCourseService listAllCourseService = new ListAllCourseServiceImpl();
+//
+//        List<Course> courseList = listAllCourseService.listAllCourseService(email);
 
-        List<Course> courseList = listAllCourseService.listAllCourseService(email);
+
+        List<Course> courseList = managerService.listAllCourseService(email);
+
 
 //      分数
-        ListAllScoreService listAllScoreService = new ListAllScoreServiceImpl();
+//        ListAllScoreService listAllScoreService = new ListAllScoreServiceImpl();
+//
+//        List<Integer> scoreList = listAllScoreService.listAllScore(email);
+        List<Integer> scoreList = managerService.listAllScore(email);
 
-        List scoreList = listAllScoreService.listAllScore(email);
-
-
-        Map map = new HashMap<String, Integer>();
+        Map<String, Integer> map = new HashMap<String, Integer>();
 
         for (int i = 0; i < courseList.size(); i++) {
 
             String courseName = courseList.get(i).getName();
-            int course_score = (int) scoreList.get(i);
+            int course_score = scoreList.get(i);
             System.out.println(courseName);
             System.out.println(course_score);
             map.put(courseName, course_score);
