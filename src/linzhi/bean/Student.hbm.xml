@@ -6,6 +6,7 @@
 <hibernate-mapping>
 
     <class name="linzhi.bean.Student" table="Student">
+        <!--<cache usage="read-write"/>-->
 
         <id name="id" column="sid" type="string">      <!--//name=id，是指主键的名字是id，column是指对应数据库中的哪一列-->
             <generator class="uuid"/>

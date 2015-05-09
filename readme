@@ -492,9 +492,43 @@ goldfish
     由此可知，需要重构整个系统 的上下层的关系。 update2015/5/4 不过好在不影响论文进度。
 
 
+ 2015/5/5
+ 1. new bug： 为什么第一次登录失败之后，第二次就算输入正确也无法登录系统。
+    这个问题在之前的LinzhiOS3 中没有遇到过，在3中可以正常运行，但是在4中却不能正常运行。
 
 
 
+
+2015/5/6
+1.  我突然想到了一种新的实现方法，我可以在登录的时候，就把所需要的各种数据全部取出，放到session中，然后后面取数据的话，直接去就可以了
+    这样不久可以提高性能了吗？通过更少的使用数据库的连接。
+
+
+2015/5/7
+1. 2015/5/5的bug解决了，因为scope没有设置，导致系统默认为我的登录loginAction为singleton，这当然是不对的。将其scope改为prototype就可以了
+
+
+
+
+
+
+
+
+
+2015/5/9
+
+
+完成的系统截图1：
+![image](http://github.com/wanglinzhizhi/LinzhiOS4/raw/master/screenshot/0.png)
+
+完成的系统截图2：
+![image](http://github.com/wanglinzhizhi/LinzhiOS4/raw/master/screenshot/1.png)
+
+完成的系统截图3：
+![image](http://github.com/wanglinzhizhi/LinzhiOS4/raw/master/screenshot/2.png)
+
+完成的系统截图4：
+![image](http://github.com/wanglinzhizhi/LinzhiOS4/raw/master/screenshot/3.png)
 
 
 
@@ -540,7 +574,9 @@ goldfish
 
 5.  ajax
 
+6.  从定向为html
 
+7.  关于数据表的重构，对于Manager对象中，我觉得应该添加一个关于实体类（课程，classNum，Score）的对象，然后将这个对象存储在ArrayList中。
 ...
 
 

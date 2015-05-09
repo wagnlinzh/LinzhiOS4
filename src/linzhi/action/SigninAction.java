@@ -49,6 +49,10 @@ public class SigninAction extends ActionSupport {
         //做没有业务逻辑的验证,只进行的是输入验证
 
         System.out.println("validate innoked!算了，这里不做输入验证了，因为js已经完成了基本的输入验证");
+
+        System.out.println("这里可以做业务逻辑的验证");
+        System.out.println("student.getEmail()   "+email);
+        System.out.println("student.getPassword()   "+password);
     }
 
     @Override

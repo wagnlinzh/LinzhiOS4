@@ -36,6 +36,10 @@
                 </prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
+
+                <!-- 二级缓存-->
+                <!--<prop key="cache.use_second_level_cache">true</prop>-->
+                <!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>-->
             </props>
         </property>
 
@@ -88,6 +92,8 @@
         <!-- 引用之前声明 的事务管理器-->
         <property name="transactionManager" ref="transactionManager"/>
 
+
+
         <property name="transactionAttributes">
             <props>
                 <!--所有find开头的 方法，设置PROPAGATION_REQUIRED，表示如果已经存在这个事务，就用这个事务，如果不存在这个事务，则新创建一个事务-->
@@ -101,25 +107,25 @@
     </bean>
 
     <!--action level-->
-    <bean id="loginAction" class="linzhi.action.SigninAction">
+    <bean id="loginAction" class="linzhi.action.SigninAction" scope="prototype">
         <property name="signinService" ref="signinService"/>
     </bean>
 
-    <bean id="logoutActin" class="linzhi.action.SignoutAction"/>
+    <bean id="logoutActin" class="linzhi.action.SignoutAction" scope="prototype"/>
 
     <bean id="checkGradeJsp_Spring" class="linzhi.action.checkGradeJspAction">
         <property name="managerService" ref="managerService"/>
     </bean>
 
 
-    <bean id="chooseClassJsp_Spring" class="linzhi.action.GetClassSchedule">
+    <bean id="chooseClassJsp_Spring" class="linzhi.action.GetClassSchedule" scope="prototype">
         <property name="managerService" ref="managerService"/>
     </bean>
 
-    <bean id="courseTips_Spring" class="linzhi.action.CourseTips"/>
+    <bean id="courseTips_Spring" class="linzhi.action.CourseTips" scope="prototype"/>
 
 
-    <bean id="className_Spring" class="linzhi.action.ClassName">
+    <bean id="className_Spring" class="linzhi.action.ClassName" scope="prototype">
         <property name="managerService" ref="managerService"/>
     </bean>
 </beans>

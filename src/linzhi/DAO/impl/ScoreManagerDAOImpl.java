@@ -43,8 +43,8 @@ public class ScoreManagerDAOImpl extends HibernateDaoSupport implements ScoreMan
     @Override
     public List<Integer> listAllScore(String email) {
         List<Integer> list = null;
-        String sid = (String) this.getHibernateTemplate().find("select Student s from linzhi.bean.Student where s.email=?", email).get(0);
-        list = (List<Integer>) this.getHibernateTemplate().find("select score from linzhi.bean.Score sc where sc.sid = ? ", sid);
+//        String sid = (String) this.getHibernateTemplate().find("select Student s from linzhi.bean.Student where s.email=?", email).get(0);
+        list = (List<Integer>) this.getHibernateTemplate().find("select score from linzhi.bean.Score ");
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i));
         }

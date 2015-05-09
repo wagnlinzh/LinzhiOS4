@@ -9,7 +9,6 @@
     <package name="struts2" extends="struts-default">
         <interceptors>
             <interceptor name="sgininInterceptor" class="linzhi.interceptor.SgininInterceptor">
-
             </interceptor>
             <!--自定义的拦截器栈-->
             <interceptor-stack name="myDefaultInterceptorStack">
@@ -28,7 +27,6 @@
         </global-results>
 
 
-
         <action name="signin" class="loginAction">
             <result name="success">WEB-INF/index.jsp</result>
             <result name="input">WEB-INF/signin.jsp</result>
@@ -39,7 +37,7 @@
         </action>
 
 
-        <!--直接传送结果-->
+
         <action name="checkGradeJsp" class="checkGradeJsp_Spring">
             <result>WEB-INF/checkGrade.jsp</result>
         </action>
@@ -59,7 +57,6 @@
         <action name="ClassName" class="className_Spring">
             <result>WEB-INF/chooseClass.jsp</result>
         </action>
-
 
 
     </package>

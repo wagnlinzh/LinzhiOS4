@@ -4,7 +4,6 @@ import linzhi.DAO.UserDAO;
 import linzhi.bean.Student;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -240,20 +239,28 @@ public class UserDAOImpl extends HibernateDaoSupport implements UserDAO {
         List list = null;
         list = this.getHibernateTemplate().find("select stu.password from Student stu where stu.email =?", email);
 
-        if (!list.isEmpty()) {
-            Iterator iterator = list.iterator();
-            while (iterator.hasNext()) {
-                String token_pass = (String) iterator.next();
-                System.out.println(token_pass);
-
-                if (token_pass.equals(password)) {
-                    return true;
-                }
-
+        if (list.size()>0){
+            String token_pass= (String) list.get(0);
+            if (token_pass.equals(password)){
+                return true;
             }
         }
 
-
         return false;
+//        while (!list.isEmpty()) {
+//            Iterator iterator = list.iterator();
+//            while (iterator.hasNext()) {
+//                String token_pass = (String) iterator.next();
+//                System.out.println("DAOImpl->check->token_pass:" + token_pass);
+//
+//                if (token_pass.equals(password)) {
+//                    return true;
+//                }
+//
+//            }
+//        }
+
+
+//        return false;
     }
 }
