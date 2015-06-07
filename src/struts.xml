@@ -58,6 +58,16 @@
             <result>WEB-INF/chooseClass.jsp</result>
         </action>
 
+        <action name="aboutHtml">
+            <result>WEB-INF/about.html</result>
+        </action>
+        <action name="contactHtml">
+            <result>WEB-INF/contact.html</result>
+        </action>
+        <action name="AccountHtml">
+            <result>WEB-INF/Acount.html</result>
+        </action>
+
 
     </package>
 </struts>

@@ -42,9 +42,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">更
                         多<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="account.html">用户信息</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="about.html">About</a></li>
+                        <li><a href="accountHtml.action">用户信息</a></li>
+                        <li><a href="contactHtml.action">Contact</a></li>
+                        <li><a href="aboutHtml.action">About</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-header">系统相关</li>
                         <li><a href="#">bug报告</a></li>
@@ -103,7 +103,7 @@
             <i class="tag icon"></i> 高等数学
         </td>
         <td>90</td>
-        <td class="right aligned collapsing">90</td>
+        <td>90</td>
     </tr>
     <tr class="warning">
         <td class="warning">
@@ -118,7 +118,7 @@
             <i class="tag icon"></i> 概率论
         </td>
         <td>20</td>
-        <td class="right aligned">20</td>
+        <td>20</td>
     </tr>
     <tr class="positive">
         <td>

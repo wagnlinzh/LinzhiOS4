@@ -2,6 +2,7 @@ package linzhi.action;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import linzhi.Unit.EncryptUtil;
 import linzhi.bean.Student;
 import linzhi.service.SigninService;
 
@@ -66,6 +67,10 @@ public class SigninAction extends ActionSupport {
 //        System.out.println("student.getPassword()   " + student.getPassword());
 
 
+        String emailMD5= EncryptUtil.md5Encrypt(email);
+        System.out.println(email+">>>>>>>>>>>>>>>>>>>>>"+emailMD5);
+        String passwordMD5=EncryptUtil.md5Encrypt(password);
+        System.out.println(password+">>>>>>>>>>>>>>>>>>>>>"+passwordMD5);
 
 
         if (this.signinService.isSignin(email,password))

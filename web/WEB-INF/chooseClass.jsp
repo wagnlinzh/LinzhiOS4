@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" language="java" autoFlush="true" errorPage="" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" errorPage="" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 
 <!DOCTYPE html>
@@ -47,9 +47,9 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">更
                         多<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="account.html">用户信息</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="about.html">About</a></li>
+                        <li><a href="accountHtml.action">用户信息</a></li>
+                        <li><a href="contactHtml.action">Contact</a></li>
+                        <li><a href="aboutHtml.action">About</a></li>
                         <li class="divider"></li>
                         <li class="dropdown-header">系统相关</li>
                         <li><a href="#">bug报告</a></li>
