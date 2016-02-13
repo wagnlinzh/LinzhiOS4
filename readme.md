@@ -1,10 +1,11 @@
 ## 关于readme
 
-1. 这个系统是居于bootstrap和SSH2完成的前端和后端。
+1. 这个系统是基于bootstrap和SSH2完成的前端和后端。
    
    开发环境主要 基于 IDEA13 + win7
    
-2. 关于这个readme，当时只是想着用来记录一些代码状况和思路演进，并没有考虑其他，所以这个readme严格意义上应该叫log更合适
+2. 关于这个readme，当时只是想着用来记录一些代码状况和思路演进，并没有考虑其他，所以这个readme严格意义上应该叫log更合适,里面包括完成的功能的过程和思路，以及对一些未完成的功能模块的问题的思考。
+
    
 3. 完成的图示：
    
@@ -55,17 +56,17 @@ home页面
 
 解决方法一：
 
-<script type="text/javascript" src="<%=request.getContextPath()%>/WEB-INF/js/default.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/WEB-INF/js/default.js"></script>
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/WEB-INF/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/WEB-INF/css/style.css" />
 
 你试试，不过我记得WEB-INF下的文件，外部是不能访问的。如果不行，你就把这些文件放在webroot下，然后再用我这个方法，就ok了，
 
 一般就是这样做的。如果不行，就把js和css文件夹拷到webroot目录下。然后
 
-<script type="text/javascript" src="<%=request.getContextPath()%>/js/default.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath()%>/js/default.js"></script>
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/css/style.css" />
 
 
 
@@ -660,25 +661,6 @@ PS.Course表中要多加一列，记录上课的时间TimeNum，名称定为Time
 
 
 
-2015/5/9
-
-
-
-完成的系统截图1：
-
-![image](http://github.com/wanglinzhizhi/LinzhiOS4/raw/master/screenshot/0.png)
-
-完成的系统截图2：
-
-![image](http://github.com/wanglinzhizhi/LinzhiOS4/raw/master/screenshot/1.png)
-
-完成的系统截图3：
-
-![image](http://github.com/wanglinzhizhi/LinzhiOS4/raw/master/screenshot/2.png)
-
-完成的系统截图4：
-
-![image](http://github.com/wanglinzhizhi/LinzhiOS4/raw/master/screenshot/3.png)
 
 
 
