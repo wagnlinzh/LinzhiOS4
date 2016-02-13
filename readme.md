@@ -8,17 +8,20 @@
    
 3. 完成的图示：
    
-   home页面
+   ​
    
-   ​                                                                ![image](/img/0.png)
+   ​
+home页面
+   
+ ![image](/img/0.png)
 
 
 
 
 
-   成绩查询模块
+成绩查询模块
 
-![image](/img/1.png)
+ ![image](/img/1.png)
 
 
 
@@ -26,13 +29,13 @@
 
 选课模块
 
-![image](/img/2.png)
+ ![image](/img/2.png)
 
 
 
 登陆模块
 
-![image](/img/3.png)
+ ![image](/img/3.png)
 
 
 
